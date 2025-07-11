@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country E-commerce Finder</title>
+    <style>
+        /* Basic reset and body styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #4ca7c3 0%, #2856a3 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: none;
+            margin-top: 40px;
+            padding: 24px 12px 18px 12px;
+            border-radius: 12px;
+            box-shadow: none;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 18px;
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 0.02em;
+        }
+        label {
+            font-size: 1rem;
+            color: #fff;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 14px;
+            margin: 10px 0 18px 0;
+            border: 1px solid #cfd8dc;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+        }
+        input[type="text"]::placeholder {
+            color: #e0e7ef;
+            opacity: 1;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #4f8cff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover, button:active {
+            background: #2563eb;
+        }
+        .results {
+            margin-top: 24px;
+        }
+        .results ul {
+            list-style: none;
+            padding: 0;
+        }
+        .results li {
+            margin-bottom: 12px;
+        }
+        .results a {
+            color: #fff;
+            text-decoration: underline;
+            font-weight: 500;
+            word-break: break-all;
+        }
+        .results a:hover {
+            text-decoration: underline;
+            color: #e0e7ef;
+        }
+        .no-results {
+            color: #fff;
+            text-align: center;
+            margin-top: 12px;
+        }
+        /* Autocomplete dropdown mobile-friendly */
+        #autocomplete-dropdown {
+            font-size: 1.05rem;
+            max-height: 220px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            background: rgba(255,255,255,0.98);
+            color: #222;
+            border: 1px solid #4f8cff;
+        }
+        #autocomplete-dropdown div {
+            padding: 14px 12px;
+            color: #222;
+        }
+        #autocomplete-dropdown div.active, #autocomplete-dropdown div:hover {
+            background: #e0e7ef;
+            color: #222;
+        }
+        .seapuri-logo {
+            width: 120px;
+            height: 120px;
+            background: #10245a;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0 auto 18px auto;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            box-shadow: 0 2px 12px rgba(16,36,90,0.08);
+        }
+        .seapuri-logo-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 18px auto;
+        }
+        .seapuri-logo-img img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 2px 12px rgba(16,36,90,0.08);
+            background: #10245a;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 16px;
+                padding: 14px 2vw 12px 2vw;
+                max-width: 98vw;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            input[type="text"], button {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            #autocomplete-dropdown {
+                font-size: 1rem;
+            }
+            .seapuri-logo {
+                width: 80px;
+                height: 80px;
+                font-size: 1.2rem;
+            }
+            .seapuri-logo-img img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="seapuri-logo-img">
+            <img src="logo.png" alt="Seapuri Logo" />
+        </div>
+        <h1>Seapuri Official Stores</h1>
+        <form id="countryForm">
+            <label for="countryInput">Enter your country:</label>
+            <input type="text" id="countryInput" name="country" placeholder="e.g., Saudi Arabia" required />
+            <button type="submit">Show</button>
+        </form>
+        <div class="results" id="results"></div>
+    </div>
+    <script>
+        // OLIVE YOUNG Global 배송국가 리스트
+        const oliveYoungCountries = [
+            "AMERICAN SAMOA","AUSTRALIA","AUSTRIA","BAHRAIN","BELGIUM","BOLIVIA","BULGARIA","CAMBODIA","CANADA","CHILE","CHINA, MAINLAND","COLOMBIA","CYPRUS","CZECH REPUBLIC","DENMARK","FINLAND","FRANCE","GERMANY","GREECE","GUAM","GUERNSEY","HONG KONG SAR, CHINA","HUNGARY","ICELAND","INDONESIA","IRELAND","ISRAEL","ITALY","JAPAN","KAZAKHSTAN","KOREA, REPUBLIC OF (SOUTH KOREA)","LUXEMBOURG","MACAU SAR, CHINA","MALAYSIA","MEXICO","MONGOLIA","NETHERLANDS","NEW ZEALAND","NORTHERN MARIANA ISLANDS (SAIPAN)","NORWAY","OMAN","PHILIPPINES","POLAND","PORTUGAL","PUERTO RICO","QATAR","ROMANIA","SAUDI ARABIA","SINGAPORE","SLOVENIA","SRI LANKA","SWEDEN","SWITZERLAND","TAIWAN REGION","TANZANIA","THAILAND","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","VENEZUELA","VIETNAM","VIRGIN ISLANDS (US)","NORTHERN MARIANA ISLANDS(SAIPAN)"
+        ];
+        // StyleKorean 배송국가 리스트
+        const styleKoreanCountries = [
+            "ALBANIA","ALGERIA","AMERICAN SAMOA","ANDORRA","ANGOLA","ANGUILLA","ANTIGUA","ARMENIA","ARUBA","AUSTRALIA","AUSTRIA","AZERBAIJAN","BAHAMAS","BAHRAIN","BANGLADESH","BARBADOS","BELGIUM","BELIZE","BENIN","BERMUDA","BHUTAN","BOLIVIA","BONAIRE","BOSNIA & HERZEGOVINA","BOTSWANA","BRUNEI","BULGARIA","BURUNDI","CAMBODIA","CAMEROON","CANADA","CAPE VERDE","CAYMAN ISLANDS","CENTRAL AFRICAN","CHAD","COMOROS","CONGO","CONGO, DPR","COOK ISLANDS","COSTA RICA","COTE D IVOIRE","CROATIA","CURACAO","CYPRUS","CZECH REP","DENMARK","DJIBOUTI","DOMINICA","DOMINICAN REP","EGYPT","EL SALVADOR","ERITREA","ESTONIA","ETHIOPIA","FALKLAND ISLANDS","FAROE ISLANDS","FIJI","FINLAND","FRANCE","FRENCH GUYANA","GABON","GAMBIA","GEORGIA","GERMANY","GHANA","GIBRALTAR","GREENLAND","GRENADA","GUADELOUPE","GUAM","GUATEMALA","GUERNSEY","GUINEA REP","GUINEA-BISSAU","GUINEA-EQUATORIAL","GUYANA BRITISH","HONDURAS","HONG KONG","HUNGARY","ICELAND","IRELAND","ITALY","JAMAICA","JERSEY","JORDAN","KAZAKHSTAN","KENYA","KIRIBATI","KOSOVO","KUWAIT","KYRGYZSTAN","LAOS","LATVIA","LESOTHO","LIBERIA","LIECHTENSTEIN","LITHUANIA","LUXEMBOURG","MADAGASCAR","MALAWI","MALAYSIA","MALDIVES","MALI","MALTA","MARTINIQUE","MAURITANIA","MAURITIUS","MAYOTTE","MICRONESIA","MOLDOVA","MONACO","MONGOLIA","MONTENEGRO","MONTSERRAT","MOZAMBIQUE","NAMIBIA","NAURU","NEPAL","NETHERLANDS","NEVIS","NEW ZEALAND","NICARAGUA","NIGER","NIGERIA","NIUE","NORTH MACEDONIA","NORWAY","OMAN","PAKISTAN","PALAU","PANAMA","PAPUA NEW GUINEA","PARAGUAY","PHILIPPINES","POLAND","PUERTO RICO","QATAR","REUNION","ROMANIA","RWANDA","SAN MARINO","SAO TOME AND PRINCIPE","SAUDI ARABIA","SENEGAL","SERBIA","SEYCHELLES","SIERRA LEONE","SINGAPORE","SLOVENIA","SOLOMON ISLANDS","SOUTH AFRICA","SOUTH SUDAN","SRI LANKA","ST. BARTHELEMY","ST. EUSTATIUS","ST. KITTS","ST. LUCIA","ST. MAARTEN","ST. VINCENT","SURINAME","SWAZILAND","SWEDEN","SWITZERLAND","TAHITI","TAIWAN","TAJIKISTAN","TANZANIA","TIMOR-LESTE","TOGO","TONGA","TRINIDAD AND TOBAGO","TUNISIA","TURKMENISTAN","TURKS & CAICOS","TUVALU","UGANDA","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","VANUATU","VATICAN CITY","VIETNAM","VIRGIN ISLANDS-BRITISH","VIRGIN ISLANDS-US","ZAMBIA","ZIMBABWE"
+        ];
+        // YesStyle 배송국가 리스트
+        const yesStyleCountries = [
+            "ALGERIA","ANDORRA","ANGOLA","ARGENTINA","ARMENIA","ARUBA","AUSTRALIA","AUSTRIA","AZERBAIJAN","BAHAMAS","BAHRAIN","BANGLADESH","BARBADOS","BELGIUM","BENIN","BHUTAN","BOLIVIA","BOSNIA AND HERZEGOVINA","BRAZIL","BRUNEI DARUSSALAM","BULGARIA","BURKINA FASO","BURUNDI","CAMBODIA","CAMEROON","CANADA","CAPE VERDE","CENTRAL AFRICAN REPUBLIC","CHAD","CHILE","COLOMBIA","CONGO","COSTA RICA","COTE D'IVOIRE","CROATIA","CYPRUS","CZECH REPUBLIC","DENMARK","DOMINICAN REPUBLIC","EAST TIMOR","ECUADOR","EGYPT","EL SALVADOR","ERITREA","ESTONIA","FALKLAND ISLANDS (MALVINAS)","FINLAND","FRANCE","GABON","GAMBIA","GEORGIA","GERMANY","GHANA","GIBRALTAR","GREECE","GUADELOUPE","GUATEMALA","GUERNSEY","GUINEA","GUINEA-BISSAU","HAITI","HOLY SEE (VATICAN CITY STATE)","HONDURAS","HONG KONG","HUNGARY","ICELAND","INDIA","IRELAND","ISLE OF MAN","ISRAEL","ITALY","JAMAICA","JAPAN","JERSEY","JORDAN","KAZAKHSTAN","KENYA","KUWAIT","KYRGYZSTAN","LAO PEOPLE'S DEMOCRATIC REPUBLIC","LATVIA","LIECHTENSTEIN","LITHUANIA","LUXEMBOURG","MACAU","MADAGASCAR","MALAYSIA","MALDIVES","MALI","MALTA","MARTINIQUE","MAURITANIA","MAURITIUS","MAYOTTE","MEXICO","MONGOLIA","MONTENEGRO","MOROCCO","MOZAMBIQUE","MYANMAR","NEPAL","NETHERLANDS","NEW ZEALAND","NICARAGUA","NORWAY","OMAN","PALESTINE","PANAMA","PARAGUAY","PERU","PHILIPPINES","POLAND","PORTUGAL","QATAR","REPUBLIC OF MOLDOVA","REPUBLIC OF NORTH MACEDONIA","REUNION","ROMANIA","RWANDA","SAN MARINO","SAO TOME AND PRINCIPE","SAUDI ARABIA","SENEGAL","SERBIA","SINGAPORE","SLOVAKIA","SLOVENIA","SOUTH AFRICA","SOUTH KOREA","SPAIN","ST. HELENA","SWEDEN","SWITZERLAND","TAIWAN","TANZANIA, UNITED REPUBLIC OF","THAILAND","TRINIDAD AND TOBAGO","TURKEY","TUVALU","UGANDA","UKRAINE","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","UZBEKISTAN","VANUATU","VENEZUELA","VIETNAM","ZAMBIA"
+        ];
+        // 사이트 매핑 생성
+        const ecommerceSites = {};
+        // 세 리스트 모두 대문자로 변환
+        const oliveSet = new Set(oliveYoungCountries.map(c => c.toUpperCase()));
+        const styleSet = new Set(styleKoreanCountries.map(c => c.toUpperCase()));
+        const yesStyleSet = new Set(yesStyleCountries.map(c => c.toUpperCase()));
+        // 모든 국가를 합쳐서 처리
+        const allCountries = new Set([...oliveSet, ...styleSet, ...yesStyleSet]);
+        allCountries.forEach(country => {
+            const sites = [];
+            if (oliveSet.has(country)) {
+                sites.push({ name: "OLIVE YOUNG Global", url: "https://global.oliveyoung.com/" });
+            }
+            if (styleSet.has(country)) {
+                sites.push({ name: "StyleKorean", url: "https://www.stylekorean.com/" });
+            }
+            if (yesStyleSet.has(country)) {
+                sites.push({ name: "YesStyle", url: "https://www.yesstyle.com/en/home.html" });
+            }
+            ecommerceSites[country] = sites;
+        });
+
+        // Kiyoko: Canada only
+        const kiyokoCountry = "CANADA";
+        if (ecommerceSites[kiyokoCountry]) {
+            ecommerceSites[kiyokoCountry].push({ name: "Kiyoko", url: "https://kiyoko.ca/products/seapuri-scalpy-hair-serum-20ml" });
+        } else {
+            ecommerceSites[kiyokoCountry] = [
+                { name: "Kiyoko", url: "https://kiyoko.ca/products/seapuri-scalpy-hair-serum-20ml" }
+            ];
+        }
+
+        // Seapuri (Hongkong): Hongkong only
+        const seapuriCountry = "HONGKONG";
+        const seapuriCountryAlt = "HONG KONG";
+        // Add Seapuri for both possible spellings
+        [seapuriCountry, seapuriCountryAlt].forEach(hk => {
+            if (ecommerceSites[hk]) {
+                ecommerceSites[hk].push({ name: "Seapuri(Hongkong)", url: "https://www.seapuri.hk/products/dr33-hair-ampoule" });
+            } else {
+                ecommerceSites[hk] = [
+                    { name: "Seapuri(Hongkong)", url: "https://www.seapuri.hk/products/dr33-hair-ampoule" }
+                ];
+            }
+        });
+
+        // Seapuri(United States): United States only
+        const seapuriUSCountry = "UNITED STATES";
+        if (ecommerceSites[seapuriUSCountry]) {
+            ecommerceSites[seapuriUSCountry].push({ name: "Seapuri(United States)", url: "https://seapuri.us/products/scalphy-hair-cooling-ampoule" });
+        } else {
+            ecommerceSites[seapuriUSCountry] = [
+                { name: "Seapuri(United States)", url: "https://seapuri.us/products/scalphy-hair-cooling-ampoule" }
+            ];
+        }
+
+        // Amazon(US): United States only
+        const amazonUSCountry = "UNITED STATES";
+        if (ecommerceSites[amazonUSCountry]) {
+            ecommerceSites[amazonUSCountry].push({ name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" });
+        } else {
+            ecommerceSites[amazonUSCountry] = [
+                { name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" }
+            ];
+        }
+
+        // Shopee links for specific countries
+        const shopeeLinks = [
+            { country: "MALAYSIA", name: "Shopee Malaysia", url: "https://shopee.com.my/product/1023314269/27618063659/?cnsc_shop_id=1023314269&is_from_signup=true" },
+            { country: "PHILIPPINES", name: "Shopee Philippines", url: "https://shopee.ph/product/1023314270/28075374847/?cnsc_shop_id=1023314270" },
+            { country: "TAIWAN", name: "Shopee Taiwan", url: "https://shopee.tw/-Seapuri-%E9%9F%93%E5%9C%8B%E5%AE%98%E6%96%B9-Dr.33-%E9%A4%8A%E9%AB%AE%E7%B2%BE%E8%8F%AF-i.985100261.26922980629?sp_atk=2fe353f3-3a37-4a3e-b242-28646bc1b806" },
+            { country: "SINGAPORE", name: "Shopee Singapore", url: "https://shopee.sg/-Seapuri-Official-Dr.33-Anti-Hair-Loss-Ampoule-Scalp-Health-Regrowth-AMB-Hair-Follicle-Regeneration-Root-Booster-No.1-Olive-Young-Korea-i.1021843590.27416150855?sp_atk=01373347-d0d6-4042-8b06-062277933364" },
+            { country: "MEXICO", name: "Shopee Mexico", url: "https://shopee.com.mx/-Seapuri-Oficial-SCALPY-S%C3%A9rum-Capilar-Antica%C3%ADda-Salud-y-Crecimiento-del-Cuero-Cabelludo-i.1023314289.26037074063" },
+            { country: "BRAZIL", name: "Shopee Brazil", url: "https://shopee.com.br/-Seapuri-Oficial-Scalpy-S%C3%A9rum-Antiqueda-Sa%C3%BAde-do-Couro-Cabeludo-e-Crescimento-Capilar-i.1023314286.42002392008" },
+            { country: "VIETNAM", name: "Shopee Vietnam", url: "https://shopee.vn/-Seapuri-Official-SCALPY-Tinh-Ch%E1%BA%A5t-D%C6%B0%E1%BB%A1ng-T[%E2%80%A6]%C4%83ng-c%C6%B0%E1%BB%9Dng-g%E1%BB%91c-i.1023314273.26434871153" },
+            { country: "THAILAND", name: "Shopee Thailand", url: "https://shopee.co.th/-Seapuri-Official-SCALPY-%E0%B9%80%E0%B8%8B%E0%B8%A3%E0%B8%B1%E0%B9%88%E0%B8%A1%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87-%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%87%E0%B8%AD%E0%B8%81%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B8%9C%E0%B8%A1-i.1023314276.40402310001" }
+        ];
+        shopeeLinks.forEach(link => {
+            if (ecommerceSites[link.country]) {
+                ecommerceSites[link.country].push({ name: link.name, url: link.url });
+            } else {
+                ecommerceSites[link.country] = [
+                    { name: link.name, url: link.url }
+                ];
+            }
+        });
+
+        // Map alternative names to UNITED STATES
+        const usAliases = ["AMERICA", "USA", "US"];
+        usAliases.forEach(alias => {
+            ecommerceSites[alias] = ecommerceSites["UNITED STATES"];
+        });
+
+        // Get references to DOM elements
+        const form = document.getElementById('countryForm');
+        const input = document.getElementById('countryInput');
+        const resultsDiv = document.getElementById('results');
+
+        // --- Autocomplete Dropdown ---
+        // Gather all unique country names (including aliases)
+        const countryNames = Array.from(new Set(Object.keys(ecommerceSites)));
+        // Create dropdown element
+        const dropdown = document.createElement('div');
+        dropdown.style.position = 'absolute';
+        dropdown.style.background = '#fff';
+        dropdown.style.border = '1px solid #cfd8dc';
+        dropdown.style.borderRadius = '6px';
+        dropdown.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+        dropdown.style.width = '100%';
+        dropdown.style.zIndex = '1000';
+        dropdown.style.display = 'none';
+        dropdown.style.maxHeight = '180px';
+        dropdown.style.overflowY = 'auto';
+        dropdown.id = 'autocomplete-dropdown';
+        input.parentNode.style.position = 'relative';
+        input.parentNode.appendChild(dropdown);
+
+        // Show suggestions
+        input.addEventListener('input', function() {
+            const value = input.value.trim().toLowerCase();
+            dropdown.innerHTML = '';
+            if (!value) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            // Find matching country names
+            const matches = countryNames.filter(name => name.toLowerCase().startsWith(value));
+            if (matches.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            matches.slice(0, 10).forEach(match => {
+                const item = document.createElement('div');
+                item.textContent = match;
+                item.style.padding = '8px 12px';
+                item.style.cursor = 'pointer';
+                item.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    input.value = match;
+                    dropdown.style.display = 'none';
+                    input.focus();
+                });
+                dropdown.appendChild(item);
+            });
+            dropdown.style.display = 'block';
+        });
+        // Hide dropdown on blur (with slight delay for click)
+        input.addEventListener('blur', function() {
+            setTimeout(() => { dropdown.style.display = 'none'; }, 120);
+        });
+        // Keyboard navigation
+        input.addEventListener('keydown', function(e) {
+            const items = dropdown.querySelectorAll('div');
+            if (!dropdown.style.display || items.length === 0) return;
+            let idx = Array.from(items).findIndex(item => item.classList.contains('active'));
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (idx < items.length - 1) idx++;
+                else idx = 0;
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (idx > 0) idx--;
+                else idx = items.length - 1;
+            } else if (e.key === 'Enter') {
+                if (idx >= 0) {
+                    e.preventDefault();
+                    input.value = items[idx].textContent;
+                    dropdown.style.display = 'none';
+                }
+            } else {
+                return;
+            }
+            items.forEach((item, i) => {
+                item.style.background = i === idx ? '#e0e7ef' : '#fff';
+                item.classList.toggle('active', i === idx);
+            });
+        });
+
+        // Handle form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload
+            const userInput = input.value.trim().toUpperCase();
+            resultsDiv.innerHTML = '';
+
+            // Case-insensitive lookup for all countries
+            const countryKey = Object.keys(ecommerceSites).find(
+                key => key.toUpperCase() === userInput
+            );
+            if (countryKey && ecommerceSites[countryKey]) {
+                const sites = ecommerceSites[countryKey];
+                // Create a list of links
+                const ul = document.createElement('ul');
+                sites.forEach(site => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = site.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.textContent = site.name;
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                });
+                resultsDiv.appendChild(ul);
+            } else {
+                // Show a message if no results found
+                resultsDiv.innerHTML = '<div class="no-results">No e-commerce sites found for this country.</div>';
+            }
+        });
+    </script>
+</body>
+</html> 
