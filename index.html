@@ -186,81 +186,105 @@
     <script>
         // OLIVE YOUNG Global 배송국가 리스트
         const oliveYoungCountries = [
-            "AMERICAN SAMOA","AUSTRALIA","AUSTRIA","BAHRAIN","BELGIUM","BOLIVIA","BULGARIA","CAMBODIA","CANADA","CHILE","CHINA, MAINLAND","COLOMBIA","CYPRUS","CZECH REPUBLIC","DENMARK","FINLAND","FRANCE","GERMANY","GREECE","GUAM","GUERNSEY","HONG KONG SAR, CHINA","HUNGARY","ICELAND","INDONESIA","IRELAND","ISRAEL","ITALY","JAPAN","KAZAKHSTAN","KOREA, REPUBLIC OF (SOUTH KOREA)","LUXEMBOURG","MACAU SAR, CHINA","MALAYSIA","MEXICO","MONGOLIA","NETHERLANDS","NEW ZEALAND","NORTHERN MARIANA ISLANDS (SAIPAN)","NORWAY","OMAN","PHILIPPINES","POLAND","PORTUGAL","PUERTO RICO","QATAR","ROMANIA","SAUDI ARABIA","SINGAPORE","SLOVENIA","SRI LANKA","SWEDEN","SWITZERLAND","TAIWAN REGION","TANZANIA","THAILAND","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","VENEZUELA","VIETNAM","VIRGIN ISLANDS (US)","NORTHERN MARIANA ISLANDS(SAIPAN)"
+            "AMERICAN SAMOA","AUSTRALIA","AUSTRIA","BAHRAIN","BELGIUM","BOLIVIA","BULGARIA","CAMBODIA","CANADA","CHILE","CHINA, MAINLAND","COLOMBIA","CYPRUS","CZECH REPUBLIC","DENMARK","FINLAND","FRANCE","GERMANY","GREECE","GUAM","GUERNSEY","HONGKONG","HUNGARY","ICELAND","INDONESIA","IRELAND","ISRAEL","ITALY","JAPAN","KAZAKHSTAN","KOREA, REPUBLIC OF","LUXEMBOURG","MACAU","MALAYSIA","MEXICO","MONGOLIA","NETHERLANDS","NEW ZEALAND","NORTHERN MARIANA ISLANDS","NORWAY","OMAN","PHILIPPINES","POLAND","PORTUGAL","PUERTO RICO","QATAR","ROMANIA","SAUDI ARABIA","SINGAPORE","SLOVENIA","SRI LANKA","SWEDEN","SWITZERLAND","TAIWAN","TANZANIA","THAILAND","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","VENEZUELA","VIETNAM","VIRGIN ISLANDS"
         ];
         // StyleKorean 배송국가 리스트
         const styleKoreanCountries = [
-            "ALBANIA","ALGERIA","AMERICAN SAMOA","ANDORRA","ANGOLA","ANGUILLA","ANTIGUA","ARMENIA","ARUBA","AUSTRALIA","AUSTRIA","AZERBAIJAN","BAHAMAS","BAHRAIN","BANGLADESH","BARBADOS","BELGIUM","BELIZE","BENIN","BERMUDA","BHUTAN","BOLIVIA","BONAIRE","BOSNIA & HERZEGOVINA","BOTSWANA","BRUNEI","BULGARIA","BURUNDI","CAMBODIA","CAMEROON","CANADA","CAPE VERDE","CAYMAN ISLANDS","CENTRAL AFRICAN","CHAD","COMOROS","CONGO","CONGO, DPR","COOK ISLANDS","COSTA RICA","COTE D IVOIRE","CROATIA","CURACAO","CYPRUS","CZECH REP","DENMARK","DJIBOUTI","DOMINICA","DOMINICAN REP","EGYPT","EL SALVADOR","ERITREA","ESTONIA","ETHIOPIA","FALKLAND ISLANDS","FAROE ISLANDS","FIJI","FINLAND","FRANCE","FRENCH GUYANA","GABON","GAMBIA","GEORGIA","GERMANY","GHANA","GIBRALTAR","GREENLAND","GRENADA","GUADELOUPE","GUAM","GUATEMALA","GUERNSEY","GUINEA REP","GUINEA-BISSAU","GUINEA-EQUATORIAL","GUYANA BRITISH","HONDURAS","HONG KONG","HUNGARY","ICELAND","IRELAND","ITALY","JAMAICA","JERSEY","JORDAN","KAZAKHSTAN","KENYA","KIRIBATI","KOSOVO","KUWAIT","KYRGYZSTAN","LAOS","LATVIA","LESOTHO","LIBERIA","LIECHTENSTEIN","LITHUANIA","LUXEMBOURG","MADAGASCAR","MALAWI","MALAYSIA","MALDIVES","MALI","MALTA","MARTINIQUE","MAURITANIA","MAURITIUS","MAYOTTE","MICRONESIA","MOLDOVA","MONACO","MONGOLIA","MONTENEGRO","MONTSERRAT","MOZAMBIQUE","NAMIBIA","NAURU","NEPAL","NETHERLANDS","NEVIS","NEW ZEALAND","NICARAGUA","NIGER","NIGERIA","NIUE","NORTH MACEDONIA","NORWAY","OMAN","PAKISTAN","PALAU","PANAMA","PAPUA NEW GUINEA","PARAGUAY","PHILIPPINES","POLAND","PUERTO RICO","QATAR","REUNION","ROMANIA","RWANDA","SAN MARINO","SAO TOME AND PRINCIPE","SAUDI ARABIA","SENEGAL","SERBIA","SEYCHELLES","SIERRA LEONE","SINGAPORE","SLOVENIA","SOLOMON ISLANDS","SOUTH AFRICA","SOUTH SUDAN","SRI LANKA","ST. BARTHELEMY","ST. EUSTATIUS","ST. KITTS","ST. LUCIA","ST. MAARTEN","ST. VINCENT","SURINAME","SWAZILAND","SWEDEN","SWITZERLAND","TAHITI","TAIWAN","TAJIKISTAN","TANZANIA","TIMOR-LESTE","TOGO","TONGA","TRINIDAD AND TOBAGO","TUNISIA","TURKMENISTAN","TURKS & CAICOS","TUVALU","UGANDA","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","VANUATU","VATICAN CITY","VIETNAM","VIRGIN ISLANDS-BRITISH","VIRGIN ISLANDS-US","ZAMBIA","ZIMBABWE"
+            "ALBANIA","ALGERIA","AMERICAN SAMOA","ANDORRA","ANGOLA","ANGUILLA","ANTIGUA","ARMENIA","ARUBA","AUSTRALIA","AUSTRIA","AZERBAIJAN","BAHAMAS","BAHRAIN","BANGLADESH","BARBADOS","BELGIUM","BELIZE","BENIN","BERMUDA","BHUTAN","BOLIVIA","BONAIRE","BOSNIA AND HERZEGOVINA","BOTSWANA","BRUNEI","BULGARIA","BURUNDI","CAMBODIA","CAMEROON","CANADA","CAPE VERDE","CENTRAL AFRICAN","CHAD","COMOROS","CONGO","CONGO, DPR","COOK ISLANDS","COSTA RICA","COTE D IVOIRE","CROATIA","CURACAO","CYPRUS","CZECH REPUBLIC","DENMARK","DJIBOUTI","DOMINICA","DOMINICAN REPUBLIC","EGYPT","EL SALVADOR","ERITREA","ESTONIA","ETHIOPIA","FALKLAND ISLANDS","FAROE ISLANDS","FIJI","FINLAND","FRANCE","FRENCH GUYANA","GABON","GAMBIA","GEORGIA","GERMANY","GHANA","GIBRALTAR","GREENLAND","GRENADA","GUADELOUPE","GUAM","GUATEMALA","GUERNSEY","GUINEA REPUBLIC","GUINEA-BISSAU","GUINEA-EQUATORIAL","GUYANA","HONDURAS","HONGKONG","HUNGARY","ICELAND","IRELAND","ITALY","JAMAICA","JERSEY","JORDAN","KAZAKHSTAN","KENYA","KIRIBATI","KOSOVO","KUWAIT","KYRGYZSTAN","LAOS","LATVIA","LESOTHO","LIBERIA","LIECHTENSTEIN","LITHUANIA","LUXEMBOURG","MADAGASCAR","MALAWI","MALAYSIA","MALDIVES","MALI","MALTA","MARTINIQUE","MAURITANIA","MAURITIUS","MAYOTTE","MICRONESIA","MOLDOVA","MONACO","MONGOLIA","MONTENEGRO","MONTSERRAT","MOZAMBIQUE","NAMIBIA","NAURU","NEPAL","NETHERLANDS","NEVIS","NEW ZEALAND","NICARAGUA","NIGER","NIGERIA","NIUE","NORTH MACEDONIA","NORWAY","OMAN","PAKISTAN","PALAU","PANAMA","PAPUA NEW GUINEA","PARAGUAY","PHILIPPINES","POLAND","PUERTO RICO","QATAR","REUNION","ROMANIA","RWANDA","SAN MARINO","SAO TOME AND PRINCIPE","SAUDI ARABIA","SENEGAL","SERBIA","SEYCHELLES","SIERRA LEONE","SINGAPORE","SLOVENIA","SOLOMON ISLANDS","SOUTH AFRICA","SOUTH SUDAN","SRI LANKA","ST. BARTHELEMY","ST. EUSTATIUS","ST. KITTS","ST. LUCIA","ST. MAARTEN","ST. VINCENT","SURINAME","SWAZILAND","SWEDEN","SWITZERLAND","TAHITI","TAIWAN","TAJIKISTAN","TANZANIA","TIMOR-LESTE","TOGO","TONGA","TRINIDAD AND TOBAGO","TUNISIA","TURKMENISTAN","TURKS AND CAICOS","TUVALU","UGANDA","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","VANUATU","VATICAN CITY","VIETNAM","VIRGIN ISLANDS-BRITISH","VIRGIN ISLANDS-US","ZAMBIA","ZIMBABWE"
         ];
         // YesStyle 배송국가 리스트
         const yesStyleCountries = [
-            "ALGERIA","ANDORRA","ANGOLA","ARGENTINA","ARMENIA","ARUBA","AUSTRALIA","AUSTRIA","AZERBAIJAN","BAHAMAS","BAHRAIN","BANGLADESH","BARBADOS","BELGIUM","BENIN","BHUTAN","BOLIVIA","BOSNIA AND HERZEGOVINA","BRAZIL","BRUNEI DARUSSALAM","BULGARIA","BURKINA FASO","BURUNDI","CAMBODIA","CAMEROON","CANADA","CAPE VERDE","CENTRAL AFRICAN REPUBLIC","CHAD","CHILE","COLOMBIA","CONGO","COSTA RICA","COTE D'IVOIRE","CROATIA","CYPRUS","CZECH REPUBLIC","DENMARK","DOMINICAN REPUBLIC","EAST TIMOR","ECUADOR","EGYPT","EL SALVADOR","ERITREA","ESTONIA","FALKLAND ISLANDS (MALVINAS)","FINLAND","FRANCE","GABON","GAMBIA","GEORGIA","GERMANY","GHANA","GIBRALTAR","GREECE","GUADELOUPE","GUATEMALA","GUERNSEY","GUINEA","GUINEA-BISSAU","HAITI","HOLY SEE (VATICAN CITY STATE)","HONDURAS","HONG KONG","HUNGARY","ICELAND","INDIA","IRELAND","ISLE OF MAN","ISRAEL","ITALY","JAMAICA","JAPAN","JERSEY","JORDAN","KAZAKHSTAN","KENYA","KUWAIT","KYRGYZSTAN","LAO PEOPLE'S DEMOCRATIC REPUBLIC","LATVIA","LIECHTENSTEIN","LITHUANIA","LUXEMBOURG","MACAU","MADAGASCAR","MALAYSIA","MALDIVES","MALI","MALTA","MARTINIQUE","MAURITANIA","MAURITIUS","MAYOTTE","MEXICO","MONGOLIA","MONTENEGRO","MOROCCO","MOZAMBIQUE","MYANMAR","NEPAL","NETHERLANDS","NEW ZEALAND","NICARAGUA","NORWAY","OMAN","PALESTINE","PANAMA","PARAGUAY","PERU","PHILIPPINES","POLAND","PORTUGAL","QATAR","REPUBLIC OF MOLDOVA","REPUBLIC OF NORTH MACEDONIA","REUNION","ROMANIA","RWANDA","SAN MARINO","SAO TOME AND PRINCIPE","SAUDI ARABIA","SENEGAL","SERBIA","SINGAPORE","SLOVAKIA","SLOVENIA","SOUTH AFRICA","SOUTH KOREA","SPAIN","ST. HELENA","SWEDEN","SWITZERLAND","TAIWAN","TANZANIA, UNITED REPUBLIC OF","THAILAND","TRINIDAD AND TOBAGO","TURKEY","TUVALU","UGANDA","UKRAINE","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","UZBEKISTAN","VANUATU","VENEZUELA","VIETNAM","ZAMBIA"
+            "ALGERIA","ANDORRA","ANGOLA","ARGENTINA","ARMENIA","ARUBA","AUSTRALIA","AUSTRIA","AZERBAIJAN","BAHAMAS","BAHRAIN","BANGLADESH","BARBADOS","BELGIUM","BENIN","BHUTAN","BOLIVIA","BOSNIA AND HERZEGOVINA","BRAZIL","BRUNEI DARUSSALAM","BULGARIA","BURKINA FASO","BURUNDI","CAMBODIA","CAMEROON","CANADA","CAPE VERDE","CENTRAL AFRICAN REPUBLIC","CHAD","CHILE","COLOMBIA","CONGO","COSTA RICA","COTE D'IVOIRE","CROATIA","CYPRUS","CZECH REPUBLIC","DENMARK","DOMINICAN REPUBLIC","EAST TIMOR","ECUADOR","EGYPT","EL SALVADOR","ERITREA","ESTONIA","FALKLAND ISLANDS","FINLAND","FRANCE","GABON","GAMBIA","GEORGIA","GERMANY","GHANA","GIBRALTAR","GREECE","GUADELOUPE","GUATEMALA","GUERNSEY","GUINEA","GUINEA-BISSAU","HAITI","HOLY SEE","HONDURAS","HONGKONG","HUNGARY","ICELAND","INDIA","IRELAND","ISLE OF MAN","ISRAEL","ITALY","JAMAICA","JAPAN","JERSEY","JORDAN","KAZAKHSTAN","KENYA","KUWAIT","KYRGYZSTAN","LAOS","LATVIA","LIECHTENSTEIN","LITHUANIA","LUXEMBOURG","MACAU","MADAGASCAR","MALAYSIA","MALDIVES","MALI","MALTA","MARTINIQUE","MAURITANIA","MAURITIUS","MAYOTTE","MEXICO","MONGOLIA","MONTENEGRO","MOROCCO","MOZAMBIQUE","MYANMAR","NEPAL","NETHERLANDS","NEW ZEALAND","NICARAGUA","NORWAY","OMAN","PALESTINE","PANAMA","PARAGUAY","PERU","PHILIPPINES","POLAND","PORTUGAL","QATAR","REPUBLIC OF MOLDOVA","REPUBLIC OF NORTH MACEDONIA","REUNION","ROMANIA","RWANDA","SAN MARINO","SAO TOME AND PRINCIPE","SAUDI ARABIA","SENEGAL","SERBIA","SINGAPORE","SLOVAKIA","SLOVENIA","SOUTH AFRICA","SOUTH KOREA","SPAIN","ST. HELENA","SWEDEN","SWITZERLAND","TAIWAN","TANZANIA","THAILAND","TRINIDAD AND TOBAGO","TURKEY","TUVALU","UGANDA","UKRAINE","UNITED ARAB EMIRATES","UNITED KINGDOM","UNITED STATES","URUGUAY","UZBEKISTAN","VANUATU","VENEZUELA","VIETNAM","ZAMBIA"
         ];
+
+        // 표준화된 국가명 매핑 (다양한 표기법을 표준명으로 통일)
+        const countryNameMapping = {
+            // 홍콩 관련
+            "HONG KONG SAR, CHINA": "HONGKONG",
+            "HONG KONG": "HONGKONG",
+            
+            // 미국 관련
+            "AMERICA": "UNITED STATES",
+            "USA": "UNITED STATES",
+            "US": "UNITED STATES",
+            
+            // 한국 관련
+            "KOREA, REPUBLIC OF (SOUTH KOREA)": "KOREA, REPUBLIC OF",
+            "KOREA, REPUBLIC OF": "SOUTH KOREA",
+            
+            // 라오스 관련
+            "LAO PEOPLE'S DEMOCRATIC REPUBLIC": "LAOS",
+            
+            // 보스니아 관련
+            "BOSNIA & HERZEGOVINA": "BOSNIA AND HERZEGOVINA",
+            
+            // 기타 표준화
+            "COTE D IVOIRE": "COTE D'IVOIRE",
+            "DOMINICAN REP": "DOMINICAN REPUBLIC",
+            "CENTRAL AFRICAN": "CENTRAL AFRICAN REPUBLIC",
+            "CONGO, DPR": "CONGO",
+            "GUINEA REPUBLIC": "GUINEA",
+            "GUYANA BRITISH": "GUYANA",
+            "HOLY SEE (VATICAN CITY STATE)": "HOLY SEE",
+            "REPUBLIC OF MOLDOVA": "MOLDOVA",
+            "REPUBLIC OF NORTH MACEDONIA": "NORTH MACEDONIA",
+            "TANZANIA, UNITED REPUBLIC OF": "TANZANIA",
+            "VIRGIN ISLANDS (US)": "VIRGIN ISLANDS",
+            "VIRGIN ISLANDS-US": "VIRGIN ISLANDS",
+            "VIRGIN ISLANDS-BRITISH": "VIRGIN ISLANDS",
+            "NORTHERN MARIANA ISLANDS(SAIPAN)": "NORTHERN MARIANA ISLANDS",
+            "TURKS & CAICOS": "TURKS AND CAICOS"
+        };
+
+        // 국가명 표준화 함수
+        function standardizeCountryName(countryName) {
+            return countryNameMapping[countryName] || countryName;
+        }
+
         // 사이트 매핑 생성
         const ecommerceSites = {};
-        // 세 리스트 모두 대문자로 변환
-        const oliveSet = new Set(oliveYoungCountries.map(c => c.toUpperCase()));
-        const styleSet = new Set(styleKoreanCountries.map(c => c.toUpperCase()));
-        const yesStyleSet = new Set(yesStyleCountries.map(c => c.toUpperCase()));
-        // 모든 국가를 합쳐서 처리
-        const allCountries = new Set([...oliveSet, ...styleSet, ...yesStyleSet]);
-        allCountries.forEach(country => {
-            const sites = [];
-            if (oliveSet.has(country)) {
-                sites.push({ name: "OLIVE YOUNG Global", url: "https://global.oliveyoung.com/" });
-            }
-            if (styleSet.has(country)) {
-                sites.push({ name: "StyleKorean", url: "https://www.stylekorean.com/" });
-            }
-            if (yesStyleSet.has(country)) {
-                sites.push({ name: "YesStyle", url: "https://www.yesstyle.com/en/home.html" });
-            }
-            ecommerceSites[country] = sites;
+        
+        // 모든 국가 리스트를 표준화하여 처리
+        const allCountryLists = [
+            { list: oliveYoungCountries, site: { name: "OLIVE YOUNG Global", url: "https://global.oliveyoung.com/product/detail?prdtNo=GA240523586&dataSource=search_result" } },
+            { list: styleKoreanCountries, site: { name: "StyleKorean", url: "https://www.stylekorean.com/shop/seapuri-scalpy-hair-serum-20ml/1747895040/" } },
+            { list: yesStyleCountries, site: { name: "YesStyle", url: "https://www.yesstyle.com/en/seapuri-scalpy-hair-serum-20ml/info.html/pid.1134798547" } }
+        ];
+
+        // 각 사이트별 배송 가능 국가를 표준화된 이름으로 매핑
+        allCountryLists.forEach(({ list, site }) => {
+            list.forEach(country => {
+                const standardName = standardizeCountryName(country);
+                if (!ecommerceSites[standardName]) {
+                    ecommerceSites[standardName] = [];
+                }
+                // 중복 사이트 추가 방지
+                const existingSite = ecommerceSites[standardName].find(s => s.name === site.name);
+                if (!existingSite) {
+                    ecommerceSites[standardName].push(site);
+                }
+            });
         });
 
-        // Kiyoko: Canada only
-        const kiyokoCountry = "CANADA";
-        if (ecommerceSites[kiyokoCountry]) {
-            ecommerceSites[kiyokoCountry].push({ name: "Kiyoko", url: "https://kiyoko.ca/products/seapuri-scalpy-hair-serum-20ml" });
-        } else {
-            ecommerceSites[kiyokoCountry] = [
-                { name: "Kiyoko", url: "https://kiyoko.ca/products/seapuri-scalpy-hair-serum-20ml" }
-            ];
-        }
+        // 특정 국가별 전용 사이트 추가
+        const specialSites = [
+            { country: "CANADA", name: "Kiyoko", url: "https://kiyoko.ca/products/seapuri-scalpy-hair-serum-20ml" },
+            { country: "HONGKONG", name: "Seapuri(Hongkong)", url: "https://www.seapuri.hk/products/dr33-hair-ampoule" },
+            { country: "UNITED STATES", name: "Seapuri(United States)", url: "https://seapuri.us/products/scalphy-hair-cooling-ampoule" },
+            { country: "UNITED STATES", name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" }
+        ];
 
-        // Seapuri (Hongkong): Hongkong only
-        const seapuriCountry = "HONGKONG";
-        const seapuriCountryAlt = "HONG KONG";
-        // Add Seapuri for both possible spellings
-        [seapuriCountry, seapuriCountryAlt].forEach(hk => {
-            if (ecommerceSites[hk]) {
-                ecommerceSites[hk].push({ name: "Seapuri(Hongkong)", url: "https://www.seapuri.hk/products/dr33-hair-ampoule" });
-            } else {
-                ecommerceSites[hk] = [
-                    { name: "Seapuri(Hongkong)", url: "https://www.seapuri.hk/products/dr33-hair-ampoule" }
-                ];
+        specialSites.forEach(({ country, name, url }) => {
+            const standardCountry = standardizeCountryName(country);
+            if (!ecommerceSites[standardCountry]) {
+                ecommerceSites[standardCountry] = [];
+            }
+            // 중복 사이트 추가 방지
+            const existingSite = ecommerceSites[standardCountry].find(s => s.name === name);
+            if (!existingSite) {
+                ecommerceSites[standardCountry].push({ name, url });
             }
         });
-
-        // Seapuri(United States): United States only
-        const seapuriUSCountry = "UNITED STATES";
-        if (ecommerceSites[seapuriUSCountry]) {
-            ecommerceSites[seapuriUSCountry].push({ name: "Seapuri(United States)", url: "https://seapuri.us/products/scalphy-hair-cooling-ampoule" });
-        } else {
-            ecommerceSites[seapuriUSCountry] = [
-                { name: "Seapuri(United States)", url: "https://seapuri.us/products/scalphy-hair-cooling-ampoule" }
-            ];
-        }
-
-        // Amazon(US): United States only
-        const amazonUSCountry = "UNITED STATES";
-        if (ecommerceSites[amazonUSCountry]) {
-            ecommerceSites[amazonUSCountry].push({ name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" });
-        } else {
-            ecommerceSites[amazonUSCountry] = [
-                { name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" }
-            ];
-        }
 
         // Shopee links for specific countries
         const shopeeLinks = [
@@ -273,21 +297,41 @@
             { country: "VIETNAM", name: "Shopee Vietnam", url: "https://shopee.vn/-Seapuri-Official-SCALPY-Tinh-Ch%E1%BA%A5t-D%C6%B0%E1%BB%A1ng-T[%E2%80%A6]%C4%83ng-c%C6%B0%E1%BB%9Dng-g%E1%BB%91c-i.1023314273.26434871153" },
             { country: "THAILAND", name: "Shopee Thailand", url: "https://shopee.co.th/-Seapuri-Official-SCALPY-%E0%B9%80%E0%B8%8B%E0%B8%A3%E0%B8%B1%E0%B9%88%E0%B8%A1%E0%B8%9B%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%9C%E0%B8%A1%E0%B8%A3%E0%B9%88%E0%B8%A7%E0%B8%87-%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%A8%E0%B8%B5%E0%B8%A3%E0%B8%A9%E0%B8%B0-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%87%E0%B8%AD%E0%B8%81%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B8%9C%E0%B8%A1-i.1023314276.40402310001" }
         ];
+
         shopeeLinks.forEach(link => {
-            if (ecommerceSites[link.country]) {
-                ecommerceSites[link.country].push({ name: link.name, url: link.url });
-            } else {
-                ecommerceSites[link.country] = [
-                    { name: link.name, url: link.url }
-                ];
+            const standardCountry = standardizeCountryName(link.country);
+            if (!ecommerceSites[standardCountry]) {
+                ecommerceSites[standardCountry] = [];
+            }
+            // 중복 사이트 추가 방지
+            const existingSite = ecommerceSites[standardCountry].find(s => s.name === link.name);
+            if (!existingSite) {
+                ecommerceSites[standardCountry].push({ name: link.name, url: link.url });
             }
         });
 
-        // Map alternative names to UNITED STATES
-        const usAliases = ["AMERICA", "USA", "US"];
-        usAliases.forEach(alias => {
-            ecommerceSites[alias] = ecommerceSites["UNITED STATES"];
-        });
+        // 별칭 매핑 (사용자 입력용)
+        const countryAliases = {
+            "AMERICA": "UNITED STATES",
+            "USA": "UNITED STATES", 
+            "US": "UNITED STATES",
+            "HONG KONG": "HONGKONG"
+        };
+
+        // 사용자 입력을 표준화된 국가명으로 변환하는 함수
+        function normalizeUserInput(input) {
+            const upperInput = input.toUpperCase();
+            // 먼저 별칭 확인
+            if (countryAliases[upperInput]) {
+                return countryAliases[upperInput];
+            }
+            // 직접 매칭 확인
+            if (ecommerceSites[upperInput]) {
+                return upperInput;
+            }
+            // 표준화 매핑 확인
+            return standardizeCountryName(upperInput);
+        }
 
         // Get references to DOM elements
         const form = document.getElementById('countryForm');
@@ -295,8 +339,9 @@
         const resultsDiv = document.getElementById('results');
 
         // --- Autocomplete Dropdown ---
-        // Gather all unique country names (including aliases)
+        // 표준화된 국가명만 자동완성에 표시 (중복 방지)
         const countryNames = Array.from(new Set(Object.keys(ecommerceSites)));
+        
         // Create dropdown element
         const dropdown = document.createElement('div');
         dropdown.style.position = 'absolute';
@@ -377,12 +422,13 @@
         // Handle form submission
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent page reload
-            const userInput = input.value.trim().toUpperCase();
+            const userInput = input.value.trim();
+            const normalizedInput = normalizeUserInput(userInput);
             resultsDiv.innerHTML = '';
 
             // Case-insensitive lookup for all countries
             const countryKey = Object.keys(ecommerceSites).find(
-                key => key.toUpperCase() === userInput
+                key => key.toUpperCase() === normalizedInput
             );
             if (countryKey && ecommerceSites[countryKey]) {
                 const sites = ecommerceSites[countryKey];
