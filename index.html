@@ -169,6 +169,16 @@
             }
         }
     </style>
+    <style>
+    /* 모바일에서 배너 2개씩 보이게 */
+    @media (max-width: 600px) {
+      .banner-link {
+        flex: 0 0 48% !important;
+        max-width: 48% !important;
+        margin: 1% !important;
+      }
+    }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -358,21 +368,31 @@
         input.parentNode.style.position = 'relative';
         input.parentNode.appendChild(dropdown);
 
-        // Show suggestions
+        // Show suggestions (input 클릭 시 전체 리스트 노출)
         input.addEventListener('input', function() {
+            showDropdown();
+        });
+        input.addEventListener('focus', function() {
+            showDropdown();
+        });
+        function showDropdown() {
             const value = input.value.trim().toLowerCase();
             dropdown.innerHTML = '';
-            if (!value) {
-                dropdown.style.display = 'none';
-                return;
-            }
-            // Find matching country names
-            const matches = countryNames.filter(name => name.toLowerCase().startsWith(value));
+            // 검색어가 없으면 전체 리스트 노출
+            const matches = value
+                ? countryNames.filter(name => {
+                    const words = name.toLowerCase().split(/[\s\.-]+/);
+                    return (
+                        name.toLowerCase().includes(value) ||
+                        words.some(word => word.includes(value))
+                    );
+                })
+                : countryNames;
             if (matches.length === 0) {
                 dropdown.style.display = 'none';
                 return;
             }
-            matches.slice(0, 10).forEach(match => {
+            matches.slice(0, 100).forEach(match => {
                 const item = document.createElement('div');
                 item.textContent = match;
                 item.style.padding = '8px 12px';
@@ -386,12 +406,12 @@
                 dropdown.appendChild(item);
             });
             dropdown.style.display = 'block';
-        });
+        }
         // Hide dropdown on blur (with slight delay for click)
         input.addEventListener('blur', function() {
             setTimeout(() => { dropdown.style.display = 'none'; }, 120);
         });
-        // Keyboard navigation
+        // Keyboard navigation (기존 코드 유지)
         input.addEventListener('keydown', function(e) {
             const items = dropdown.querySelectorAll('div');
             if (!dropdown.style.display || items.length === 0) return;
@@ -432,19 +452,66 @@
             );
             if (countryKey && ecommerceSites[countryKey]) {
                 const sites = ecommerceSites[countryKey];
-                // Create a list of links
-                const ul = document.createElement('ul');
+                // Create a flex container for banners
+                const bannerDiv = document.createElement('div');
+                bannerDiv.style.display = 'flex';
+                bannerDiv.style.flexWrap = 'wrap';
+                bannerDiv.style.justifyContent = 'center';
+                bannerDiv.style.gap = '18px';
+                bannerDiv.style.marginTop = '18px';
                 sites.forEach(site => {
-                    const li = document.createElement('li');
                     const a = document.createElement('a');
                     a.href = site.url;
                     a.target = '_blank';
                     a.rel = 'noopener noreferrer';
-                    a.textContent = site.name;
-                    li.appendChild(a);
-                    ul.appendChild(li);
+                    a.style.display = 'inline-block';
+                    a.style.background = '#fff';
+                    a.style.borderRadius = '12px';
+                    a.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                    a.style.padding = '8px 16px';
+                    a.style.margin = '0 0 8px 0';
+                    a.style.minWidth = '120px';
+                    a.style.minHeight = '60px';
+                    a.style.maxWidth = '180px';
+                    a.style.maxHeight = '80px';
+                    a.style.display = 'flex';
+                    a.style.alignItems = 'center';
+                    a.style.justifyContent = 'center';
+                    a.classList.add('banner-link');
+                    // 이미지 파일명 매핑 (공백, 괄호, 대소문자 등 정리)
+                    let imgName = site.name
+                        .replace(/\(.*?\)/g, '') // 괄호 제거
+                        .replace(/[^a-zA-Z0-9]/g, '') // 특수문자 제거
+                        .toLowerCase() + '.png';
+                    // 예외 처리 (Amazon(US) → amazon.png, Shopee Malaysia → shopee.png 등)
+                    if (site.name.toLowerCase().includes('amazon')) imgName = 'amazon.png';
+                    if (site.name.toLowerCase().includes('shopee')) imgName = 'shopee.png';
+                    if (site.name.toLowerCase().includes('kiyoko')) imgName = 'kiyoko.png';
+                    if (site.name.toLowerCase().includes('seapuri')) imgName = 'seapuri.png';
+                    if (site.name.toLowerCase().includes('yesstyle')) imgName = 'yesstyle.png';
+                    if (site.name.toLowerCase().includes('olive young')) imgName = 'oliveyoung.png';
+                    // 이미지 엘리먼트 생성
+                    const img = document.createElement('img');
+                    img.src = imgName;
+                    img.alt = site.name;
+                    img.style.maxWidth = '140px';
+                    img.style.maxHeight = '60px';
+                    img.style.objectFit = 'contain';
+                    img.style.background = 'transparent';
+                    img.onerror = function() {
+                        // 이미지가 없으면 텍스트로 대체
+                        img.style.display = 'none';
+                        const fallback = document.createElement('span');
+                        fallback.textContent = site.name;
+                        fallback.style.fontWeight = 'bold';
+                        fallback.style.color = '#222';
+                        fallback.style.fontSize = '1.1rem';
+                        a.appendChild(fallback);
+                    };
+                    a.appendChild(img);
+                    bannerDiv.appendChild(a);
                 });
-                resultsDiv.appendChild(ul);
+                resultsDiv.appendChild(bannerDiv);
             } else {
                 // Show a message if no results found
                 resultsDiv.innerHTML = '<div class="no-results">No e-commerce sites found for this country.</div>';
