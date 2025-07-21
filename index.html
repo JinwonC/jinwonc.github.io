@@ -287,7 +287,8 @@
             { country: "CANADA", name: "Kiyoko", url: "https://kiyoko.ca/products/seapuri-scalpy-hair-serum-20ml" },
             { country: "HONGKONG", name: "Seapuri(Hongkong)", url: "https://www.seapuri.hk/products/dr33-hair-ampoule" },
             { country: "UNITED STATES", name: "Seapuri(United States)", url: "https://seapuri.us/products/scalphy-hair-cooling-ampoule" },
-            { country: "UNITED STATES", name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" }
+            { country: "UNITED STATES", name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" },
+            { country: "UNITED STATES", name: "TikTok Shop", url: "https://www.tiktok.com/shop/pdp/seapuri-scalpy-hair-growth-serum-20ml-with-salicylic-acid-menthol/1730773311857791744?source=301" }
         ];
 
         specialSites.forEach(({ country, name, url }) => {
@@ -496,6 +497,7 @@
                     if (site.name.toLowerCase().includes('seapuri')) imgName = 'seapuri.png';
                     if (site.name.toLowerCase().includes('yesstyle')) imgName = 'yesstyle.png';
                     if (site.name.toLowerCase().includes('olive young')) imgName = 'oliveyoung.png';
+                    if (site.name.toLowerCase().includes('tiktok')) imgName = 'tiktokshop.png';
                     // 이미지 엘리먼트 생성
                     const img = document.createElement('img');
                     img.src = imgName;
