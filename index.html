@@ -481,25 +481,47 @@ _iub.csConfiguration = {"siteId":4192019,"cookiePolicyId":27003674,"lang":"en","
             if (countryKey && ecommerceSites[countryKey]) {
                 let sites = ecommerceSites[countryKey];
                 // 우선순위 배열
-                const priority = [
-                  'amazon',
-                  'seapuri',
-                  'tiktok shop',
-                  'shopee',
-                  'stylekorean',
-                  'olive young',
-                  'kiyoko',
-                  'superdrug',
-                  'cosmetify',
-                  'hongkong'
-                ];
-                // 우선순위에 따라 정렬
-                sites = sites.slice().sort((a, b) => {
-                  const aIdx = priority.findIndex(p => a.name.toLowerCase().includes(p));
-                  const bIdx = priority.findIndex(p => b.name.toLowerCase().includes(p));
-                  // 우선순위가 없으면 뒤로
-                  return (aIdx === -1 ? 99 : aIdx) - (bIdx === -1 ? 99 : bIdx);
-                });
+                // 우선순위: 국가별 커스텀 + 기본값
+const defaultPriority = [
+  'amazon',
+  'seapuri',
+  'tiktok shop',
+  'shopee',
+  'stylekorean',
+  'olive young',
+  'kiyoko',
+  'superdrug',
+  'cosmetify',
+  'hongkong'
+];
+
+  // 국가별(영국) 우선순위
+  const countrySpecificPriority = {
+    'UNITED KINGDOM': [
+      'glamtouch',
+      'superdrug',
+      'cosmetify',
+      'stylekorean',
+      'yesstyle',
+      'olive young' // (공백 포함 표기, 로고 파일명 매핑과 일치)
+  ]
+};
+
+// 비교용: 소문자 + 공백 제거(선택)로 좀 더 견고하게
+const norm = (s) => s.toLowerCase();
+
+// 정렬
+const activePriority =
+  countrySpecificPriority[countryKey] || defaultPriority;
+
+sites = sites.slice().sort((a, b) => {
+  const aName = norm(a.name);
+  const bName = norm(b.name);
+  const aIdx = activePriority.findIndex(p => aName.includes(p));
+  const bIdx = activePriority.findIndex(p => bName.includes(p));
+  return (aIdx === -1 ? 99 : aIdx) - (bIdx === -1 ? 99 : bIdx);
+});
+
                 // Create a flex container for banners
                 const bannerDiv = document.createElement('div');
                 bannerDiv.style.display = 'flex';
