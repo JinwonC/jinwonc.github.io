@@ -1,21 +1,3 @@
-<script type="text/javascript">
-var _iub = _iub || [];
-_iub.csConfiguration = {"siteId":4192019,"cookiePolicyId":27003674,"lang":"en","storage":{"useSiteId":true}};
-</script>
-<script type="text/javascript" src="https://cs.iubenda.com/autoblocking/4192019.js"></script>
-<script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
-<script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-65HLTCQKR5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-65HLTCQKR5');
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -303,7 +285,7 @@ _iub.csConfiguration = {"siteId":4192019,"cookiePolicyId":27003674,"lang":"en","
         // 특정 국가별 전용 사이트 추가
         const specialSites = [
             { country: "CANADA", name: "Kiyoko", url: "https://kiyoko.ca/products/seapuri-scalpy-hair-serum-20ml" },
-            { country: "CANADA", name: "koreanshop", url: "https://koreanshop.ca/product/seapuri-scalpy-hair-serum-20ml/" },
+            { country: "CANADA", name: "Koreanshop", url: "https://koreanshop.ca/product/seapuri-scalpy-hair-serum-20ml/" },
             { country: "HONGKONG", name: "Seapuri(Hongkong)", url: "https://www.seapuri.hk/products/dr33-hair-ampoule" },
             { country: "UNITED STATES", name: "Seapuri(United States)", url: "https://seapuri.us/products/scalphy-hair-cooling-ampoule" },
             { country: "UNITED STATES", name: "Amazon(US)", url: "https://www.amazon.com/dp/B0DFH2BCD2?maas=maas_adg_7F2E935B39D2F1A0B1C22A0B035C505B_afap_abs&ref_=aa_maas&tag=maas" },
@@ -482,48 +464,26 @@ _iub.csConfiguration = {"siteId":4192019,"cookiePolicyId":27003674,"lang":"en","
             if (countryKey && ecommerceSites[countryKey]) {
                 let sites = ecommerceSites[countryKey];
                 // 우선순위 배열
-                // 우선순위: 국가별 커스텀 + 기본값
-const defaultPriority = [
-  'amazon',
-  'seapuri',
-  'tiktok shop',
-  'shopee',
-  'stylekorean',
-  'olive young',
-  'kiyoko',
-  'superdrug',
-  'cosmetify',
-  'hongkong'
-  'koreanshop'
-];
-
-  // 국가별(영국) 우선순위
-  const countrySpecificPriority = {
-    'UNITED KINGDOM': [
-      'glamtouch',
-      'superdrug',
-      'cosmetify',
-      'stylekorean',
-      'yesstyle',
-      'olive young' // (공백 포함 표기, 로고 파일명 매핑과 일치)
-  ]
-};
-
-// 비교용: 소문자 + 공백 제거(선택)로 좀 더 견고하게
-const norm = (s) => s.toLowerCase();
-
-// 정렬
-const activePriority =
-  countrySpecificPriority[countryKey] || defaultPriority;
-
-sites = sites.slice().sort((a, b) => {
-  const aName = norm(a.name);
-  const bName = norm(b.name);
-  const aIdx = activePriority.findIndex(p => aName.includes(p));
-  const bIdx = activePriority.findIndex(p => bName.includes(p));
-  return (aIdx === -1 ? 99 : aIdx) - (bIdx === -1 ? 99 : bIdx);
-});
-
+                const priority = [
+                  'amazon',
+                  'seapuri',
+                  'tiktok shop',
+                  'koreanshop',
+                  'shopee',
+                  'stylekorean',
+                  'olive young',
+                  'kiyoko',
+                  'superdrug',
+                  'cosmetify',
+                  'hongkong'
+                ];
+                // 우선순위에 따라 정렬
+                sites = sites.slice().sort((a, b) => {
+                  const aIdx = priority.findIndex(p => a.name.toLowerCase().includes(p));
+                  const bIdx = priority.findIndex(p => b.name.toLowerCase().includes(p));
+                  // 우선순위가 없으면 뒤로
+                  return (aIdx === -1 ? 99 : aIdx) - (bIdx === -1 ? 99 : bIdx);
+                });
                 // Create a flex container for banners
                 const bannerDiv = document.createElement('div');
                 bannerDiv.style.display = 'flex';
@@ -560,12 +520,12 @@ sites = sites.slice().sort((a, b) => {
                     if (site.name.toLowerCase().includes('shopee')) imgName = 'shopee.png';
                     if (site.name.toLowerCase().includes('kiyoko')) imgName = 'kiyoko.png';
                     if (site.name.toLowerCase().includes('seapuri')) imgName = 'seapuri.png';
-                    if (site.name.toLowerCase().includes('koreanshop')) imgName = 'koreanshop.png';
                     if (site.name.toLowerCase().includes('yesstyle')) imgName = 'yesstyle.png';
                     if (site.name.toLowerCase().includes('olive young')) imgName = 'oliveyoung.png';
                     if (site.name.toLowerCase().includes('tiktok')) imgName = 'tiktokshop.png';
                     if (site.name.toLowerCase().includes('superdrug')) imgName = 'SUPERDRUG.png';
                     if (site.name.toLowerCase().includes('cosmetify')) imgName = 'COMESTIFY.png';
+                    if (site.name.toLowerCase().includes('koreanshop')) imgName = 'koreanshop.png';
                     if (site.name.toLowerCase().includes('glamtouch')) imgName = 'GLAMTOUCH.png';
                     // 이미지 엘리먼트 생성
                     const img = document.createElement('img');
